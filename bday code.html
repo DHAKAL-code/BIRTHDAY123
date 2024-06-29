@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Birthday Countdown</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-image: url('background.jpg'); /* Background photo */
+            background-size: cover;
+            background-position: center;
+            color: white; /* Text color for visibility against the background */
+        }
+        #countdown {
+            font-size: 2em;
+            margin-top: 20%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for better visibility */
+            display: inline-block;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        #popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            color: black; /* Text color inside the popup */
+            border-radius: 10px;
+        }
+        #popup img, #popup video {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Birthday Countdown</h1>
+    <div id="countdown"></div>
+    <div id="popup">
+        <h2>Happy Birthday!</h2>
+        <img id="birthday-photo" src="" alt="Birthday Photo" style="display: none;">
+        <video id="birthday-video" controls style="display: none;">
+            <source src="video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <script>
+        // Set the date we're counting down to
+        var countDownDate = new Date("Jun 30, 2024 00:00:00").getTime();
+
+        // Update the countdown every 1 second
+        var x = setInterval(function() {
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s ";
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "EXPIRED";
+                document.getElementById("popup").style.display = "block";
+                showPhotoAndVideo();
+            }
+        }, 1000);
+
+        function showPhotoAndVideo() {
+            var photo = document.getElementById("birthday-photo");
+            var video = document.getElementById("birthday-video");
+
+            photo.style.display = "block";
+            setTimeout(function() {
+                photo.style.display = "none";
+                video.style.display = "block";
+            }, 5000); // Show photo for 5 seconds before showing video
+        }
+    </script>
+</body>
+</html>
